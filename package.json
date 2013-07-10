@@ -1,0 +1,21 @@
+{
+	"name": "node-webkit-sphero-prototype",
+	"version": "0.0.1",
+	"description": "Test integration with node sphero plugin via serial-socket",
+	"main": "app.html",
+	"window": {
+		"title": "node webkit test with sphero",
+		"show": true,
+    "toolbar": false,
+    "frame": true,
+    "position": "center",
+    "width": 1024,
+    "height": 640,
+    "min_width": 1024,
+    "min_height": 576
+  	},
+  	"private": true,
+  	"dependencies": {
+    	"node-sphero": ">= 0.0.5"
+  	}
+}
