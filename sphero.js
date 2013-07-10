@@ -69,20 +69,31 @@ sphero.on('notification', function(message) {
 		var dz = accel.z - last.z;
 		var dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
 
-		if (dist > 100) {
-			energy = Math.min(energy + dist/800, 255);
-		}
+		//if (dist > 10) {
+			energy = Math.min(energy + dist/600, 255);
+		//}
 	}
 
-	if(energy <= 255) intervallThreshold = 2;
-	if(energy <= 240) intervallThreshold = 3;
-	if(energy <= 145) intervallThreshold = 8;
-	if(energy <= 55) intervallThreshold = 10;
-	if(energy <= 8) intervallThreshold = 12;
-	if(energy <= 5) intervallThreshold = 14;
-	if(energy <= 1.8) intervallThreshold = 16;
-	if(energy <= 0.2) intervallThreshold = 18;
-	if(energy <= 0.05) intervallThreshold = 20;
+	if(energy <= 255) intervallThreshold = 1;
+	if(energy <= 253) intervallThreshold = 2;
+	if(energy <= 210) intervallThreshold = 3;
+	if(energy <= 180) intervallThreshold = 4;
+	if(energy <= 160) intervallThreshold = 5;
+	if(energy <= 145) intervallThreshold = 6;
+	if(energy <= 125) intervallThreshold = 7;
+	if(energy <= 110) intervallThreshold = 8;
+	if(energy <= 80) 	intervallThreshold = 9;
+	if(energy <= 55) 	intervallThreshold = 10;
+	if(energy <= 20) 	intervallThreshold = 11;
+	if(energy <= 8) 	intervallThreshold = 12;
+	if(energy <= 5) 	intervallThreshold = 13;
+	if(energy <= 3) 	intervallThreshold = 14;
+	if(energy <= 1.5) intervallThreshold = 15;
+	if(energy <= 1) 	intervallThreshold = 16;
+	if(energy <= 0.8) intervallThreshold = 17;
+	if(energy <= 0.6) intervallThreshold = 18;
+	if(energy <= 0.4) intervallThreshold = 19;
+	if(energy <= 0.2) intervallThreshold = 20;
 
 	sphero.setRGBLED(0, ((circleOpacity + energy)/2), 0, false);
 	energy = Math.max(energy - 2, 0);
