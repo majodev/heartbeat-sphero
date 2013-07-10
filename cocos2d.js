@@ -7,12 +7,12 @@
         chipmunk: false, // no chipmunk engine
         showFPS:true, // let's show the FPS meter
         frameRate:60, // 60 frames per second
-        loadExtension:false,
+        loadExtension:true, //? needed for audio I suppose
         renderMode:1,       //Choose of RenderMode: 0(default), 1(Canvas only), 2(WebGL only)
         tag:"gameCanvas", // id of the canvas element
         engineDir:"./cocos2d/", // path to your cocos2d installation
         //SingleEngineFile:'',
-        appFiles:["circlechain.js"] // path to the main game file
+        appFiles:["circlechain.js", "resource.js"] // path to the main game file
     };
     window.addEventListener('DOMContentLoaded', function () {
         var s = d.createElement("script");

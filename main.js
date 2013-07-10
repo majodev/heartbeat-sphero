@@ -39,6 +39,8 @@ var cocos2dApp = cc.Application.extend({
 
 
 var myApp = new cocos2dApp(circlechain);
+var audioEngine = cc.AudioEngine.getInstance();
+
 
 // add method for resizing via scaling, code from http://cocos2d-x.org/boards/19/topics/31205
 myApp.adjustSizeForWindow = function () {
