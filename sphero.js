@@ -1,4 +1,5 @@
 var spheroModule = require('node-sphero');
+
 var sphero = new spheroModule.Sphero();
 
 var energy = 0;
@@ -52,7 +53,7 @@ sphero.on('notification', function(message) {
 
 	//console.log(energy);
 
-	circleSpeed = 0.1 + 7*(energy/256);
+	circleSpeed = (circleSpeed + (0.1 + 7*(energy/256)))/2;
 
 	//console.log("energy=" + energy + ", circleSpeed=" + circleSpeed + "\n");
 	//document.write(energy + '\n');
@@ -73,16 +74,25 @@ setInterval((function() {
 		rolling = true;
 		
 		intervallCounter = 0;
-		circleOpacity = 255;
+		circleOpacity = 127 + (energy)/2;
 		circleScale = 1.0;
+		//circleSpeed = circleSpeed + 0.5;
 
 		if(audioEngine != undefined) {
 			audioEngine.playEffect(s_bgMusicOgg);
 		}
 
-		console.log("beat. - threshold=" + intervallThreshold + " energy=" + energy);
+		console.log("beat. - threshold=" + intervallThreshold + " energy=" + energy + " circleOpacity=" + circleOpacity);
 	} else {
+		//circleSpeed = circleSpeed - 0.5/intervallThreshold;
 		rolling = false;
 		intervallCounter++;
 	}
 }), 100);
+
+// var jwertyModule = require('jwerty');
+// var jwerty = jwertyModule.jwerty;
+
+// jwerty.key('→', function () { energy = energy+10; console.log('up') }, '#gameCanvas');
+// jwerty.key('←', function () { energy = energy-10; console.log('down') }, '#gameCanvas');
+

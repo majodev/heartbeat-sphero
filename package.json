@@ -9,13 +9,14 @@
     "toolbar": false,
     "frame": true,
     "position": "center",
-    "width": 1024,
-    "height": 640,
-    "min_width": 1024,
-    "min_height": 576
+    "width": 640,
+    "height": 400,
+    "min_width": 640,
+    "min_height": 400
   	},
   	"private": true,
   	"dependencies": {
-    	"node-sphero": ">= 0.0.5"
+    	"node-sphero": ">= 0.0.5",
+      "jwerty": ">= 0.3.2"
   	}
 }
