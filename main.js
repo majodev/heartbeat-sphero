@@ -78,3 +78,4 @@ $(window).on('resize', function() {
    console.log("resize");
    myApp.adjustSizeForWindow();
 });
+

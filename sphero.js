@@ -4,8 +4,11 @@ var sphero = new spheroModule.Sphero();
 var energy = 0;
 var last;
 
+var rolling = false;
+
 sphero.on('connected', function() {
-	sphero.setStabilization(false);
+	 console.log("Sphero connected!");
+	sphero.setStabilization(true);
 	sphero.setDataStreaming([
 		sphero.sensors.accelerometer_x,
 		sphero.sensors.accelerometer_y,
@@ -34,15 +37,29 @@ sphero.on('notification', function(message) {
 	sphero.setRGBLED(0, 0, energy, false);
 	energy = Math.max(energy - 2, 0);
 
-	console.log(energy);
-	document.write(energy + '\n');
+	//console.log(energy);
 
-	last = accel;
+	circleSpeed = 0.2 + 7*(energy/256);
+
+	//console.log("energy=" + energy + ", circleSpeed=" + circleSpeed + "\n");
+	//document.write(energy + '\n');
+
+	last = accel; 
 });
 
-sphero.on('error', function() {
-	sphero.connect();
-});
+setInterval((function() {
+	if(rolling === false) {
+		sphero.setHeading(45).setHeading(315);
+		rolling = true;
+	} else {
+		//disable and reset heartbeat timing
+		rolling = false;
+	}
+}), 1000);
+
+//sphero.on('error', function() {
+//	sphero.connect();
+//});
 
 
 sphero.connect();
