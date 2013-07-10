@@ -1,13 +1,49 @@
-var spheroModule = require('node-sphero');
-
-var sphero = new spheroModule.Sphero();
-
 var energy = 0;
 var last;
 
 var rolling = false;
 var intervallCounter = 0;
 var intervallThreshold = 20;
+
+setInterval((function() {
+	if(typeof circleOpacity === "undefined") {
+		return
+	}
+
+	if(rolling === false && intervallCounter >= intervallThreshold) {
+
+		rolling = true;
+		
+		intervallCounter = 0;
+		circleOpacity = 127 + (energy)/2;
+		circleScale = 1.0;
+		//circleSpeed = circleSpeed + 0.5;
+
+		if(typeof audioEngine === undefined) {
+			console.log("beat, cannot play audio!");
+		} else {
+			audioEngine.playEffect(s_bgMusicOgg);
+		}
+
+		if(typeof sphero === "undefined") {
+			console.log("beat, cannot communicate with sphero!");
+		} else {
+			sphero.setHeading(45).setHeading(315);
+			sphero.setRGBLED(0, 255, 0, false);
+		}
+
+		console.log("beat. - threshold=" + intervallThreshold + " energy=" + energy + " circleOpacity=" + circleOpacity);
+	} else {
+		//circleSpeed = circleSpeed - 0.5/intervallThreshold;
+		rolling = false;
+		intervallCounter++;
+	}
+}), 100);
+
+
+
+var spheroModule = require('node-sphero');
+var sphero = new spheroModule.Sphero();
 
 
 sphero.on('connected', function() {
@@ -63,32 +99,7 @@ sphero.on('notification', function(message) {
 
 sphero.connect();
 
-setInterval((function() {
-	if(!circleOpacity) {
-		return
-	}
 
-	if(rolling === false && intervallCounter >= intervallThreshold) {
-		sphero.setHeading(45).setHeading(315);
-		sphero.setRGBLED(0, 255, 0, false);
-		rolling = true;
-		
-		intervallCounter = 0;
-		circleOpacity = 127 + (energy)/2;
-		circleScale = 1.0;
-		//circleSpeed = circleSpeed + 0.5;
-
-		if(audioEngine != undefined) {
-			audioEngine.playEffect(s_bgMusicOgg);
-		}
-
-		console.log("beat. - threshold=" + intervallThreshold + " energy=" + energy + " circleOpacity=" + circleOpacity);
-	} else {
-		//circleSpeed = circleSpeed - 0.5/intervallThreshold;
-		rolling = false;
-		intervallCounter++;
-	}
-}), 100);
 
 // var jwertyModule = require('jwerty');
 // var jwerty = jwertyModule.jwerty;
