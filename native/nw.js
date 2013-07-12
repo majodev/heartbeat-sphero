@@ -1,6 +1,4 @@
-global.$ = $;
-
-// Load native UI library
+// Load native UI library from node-webkit
 var gui = require('nw.gui');
 
 // Get the current window
@@ -11,4 +9,5 @@ win.on('focus', function() {
   console.log('New window is focused');
 });
 
+// show dev-tools for debugging
 //win.showDevTools();

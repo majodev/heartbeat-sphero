@@ -18,7 +18,6 @@
   	},
   	"private": true,
   	"dependencies": {
-    	"node-sphero": ">= 0.0.5",
-      "jwerty": ">= 0.3.2"
+    	"node-sphero": ">= 0.0.5"
   	}
 }

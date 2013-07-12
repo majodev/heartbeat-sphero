@@ -5,9 +5,11 @@ var rolling = false;
 var intervallCounter = 0;
 var intervallThreshold = 20;
 
+
+// todo - move this to cocos layer completely!
 setInterval((function() {
 	if(typeof circleOpacity === "undefined") {
-		return
+		return;
 	}
 
 	if(rolling === false && intervallCounter >= intervallThreshold) {
@@ -17,7 +19,6 @@ setInterval((function() {
 		intervallCounter = 0;
 		circleOpacity = 127 + (energy+1)/2;
 		circleScale = 1.0;
-		//circleSpeed = circleSpeed + 0.5;
 
 		if(typeof audioEngine === undefined) {
 			console.log("beat, cannot play audio!");
@@ -34,7 +35,6 @@ setInterval((function() {
 
 		console.log("beat. - threshold=" + intervallThreshold + " energy=" + energy + " circleOpacity=" + circleOpacity);
 	} else {
-		//circleSpeed = circleSpeed - 0.5/intervallThreshold;
 		rolling = false;
 		intervallCounter++;
 	}
@@ -46,6 +46,7 @@ var spheroModule = require('node-sphero');
 var sphero = new spheroModule.Sphero();
 
 
+// todo - move this to cocos layer completely!
 var determineThresholdAndSpeed = function () {
 	if(energy <= 255) 	intervallThreshold = 1;
 	if(energy <= 254) 	intervallThreshold = 2;
@@ -104,20 +105,9 @@ sphero.on('notification', function(message) {
 	energy = Math.max(energy, 0);
 	determineThresholdAndSpeed();
 
-	//console.log(energy);
 	//console.log("energy=" + energy + ", circleSpeed=" + circleSpeed + "\n");
-	//document.write(energy + '\n');
 
 	last = accel; 
 });
 
 sphero.connect();
-
-
-
-// var jwertyModule = require('jwerty');
-// var jwerty = jwertyModule.jwerty;
-
-// jwerty.key('→', function () { energy = energy+10; console.log('up') }, '#gameCanvas');
-// jwerty.key('←', function () { energy = energy-10; console.log('down') }, '#gameCanvas');
-
