@@ -6,6 +6,11 @@ var circleSpeed = 0.1;
 var circleScale = 0.4;
 var circleMinScale = 0.4;
 
+var energy = 0;
+
+var intervallCounter = 0;
+var intervallThreshold = 20;
+
 var circlechain = cc.Scene.extend({
 	onEnter:function(){
 		this._super();
@@ -23,6 +28,62 @@ var circlechain = cc.Scene.extend({
 	}
 });
 
+var schedule_heartbeat = function () {
+	//console.log("schedule_heartbeat");
+	if(typeof circleOpacity === "undefined") {
+		return;
+	}
+
+	if(intervallCounter >= intervallThreshold) {
+		
+		intervallCounter = 0;
+		circleOpacity = 127 + (energy+1)/2;
+		circleScale = 1.0;
+
+		if(typeof audioEngine === undefined) {
+			console.log("beat, cannot play audio!");
+		} else {
+			audioEngine.playEffect(s_bgMusicOgg);
+		}
+
+		if(typeof sphero === "undefined") {
+			console.log("beat, cannot communicate with sphero!");
+		} else {
+			sphero.setHeading(45).setHeading(315);
+			sphero.setRGBLED(0, 255, 0, false);
+		}
+
+		console.log("beat. - threshold=" + intervallThreshold + " energy=" + energy + " circleOpacity=" + circleOpacity);
+	} else {
+		intervallCounter++;
+	}
+}
+
+// todo - move this to cocos layer completely!
+var determineThresholdAndSpeed = function () {
+	if(energy <= 255) 	intervallThreshold = 2;
+	if(energy <= 240) 	intervallThreshold = 3;
+	if(energy <= 220) 	intervallThreshold = 4;
+	if(energy <= 160) 	intervallThreshold = 5;
+	if(energy <= 145) 	intervallThreshold = 6;
+	if(energy <= 125) 	intervallThreshold = 7;
+	if(energy <= 110) 	intervallThreshold = 8;
+	if(energy <= 80) 		intervallThreshold = 9;
+	if(energy <= 55) 		intervallThreshold = 10;
+	if(energy <= 20) 		intervallThreshold = 11;
+	if(energy <= 8) 		intervallThreshold = 12;
+	if(energy <= 5) 		intervallThreshold = 13;
+	if(energy <= 3) 		intervallThreshold = 14;
+	if(energy <= 1.5) 	intervallThreshold = 15;
+	if(energy <= 1) 		intervallThreshold = 16;
+	if(energy <= 0.8) 	intervallThreshold = 17;
+	if(energy <= 0.6) 	intervallThreshold = 18;
+	if(energy <= 0.4) 	intervallThreshold = 19;
+	if(energy <= 0.2) 	intervallThreshold = 20;
+
+	circleSpeed = (circleSpeed + (0.1 + 7*(energy/256)))/2;
+}
+
 var circleChainGame = cc.Layer.extend({
 	init:function(){
 		this._super();
@@ -34,6 +95,10 @@ var circleChainGame = cc.Layer.extend({
 
 		// tell that update function should be called per frame
 		this.scheduleUpdate();
+
+		// and schedule an own function that will be called every delay
+		this.schedule(schedule_heartbeat, 0.1, cc.RepeatForever(), cc.DelayTime.create(0));
+
 		// tell that keyboard input will be captured.
 		this.setKeyboardEnabled(true);
 
@@ -91,27 +156,29 @@ var circleChainGame = cc.Layer.extend({
 
 		// decrease opacity by modifier on update
 		if(circleOpacity > circleMinOpacity) {
-			circleOpacity = circleOpacity - 14;
+			circleOpacity = circleOpacity - 20;
 		}
 
 		// decrease scale by modifier on update
 		if(circleScale > circleMinScale) {
-			circleScale = circleScale - 0.033;
+			circleScale = circleScale - 0.05;
 		}
 	},
 	onKeyUp : function(key) {
 		switch (key) {
 		case 37: // left
-			energy = energy - 5;
-			determineThresholdAndSpeed();
+			if(energy >= 5) energy = energy - 5; determineThresholdAndSpeed();
 			break;
 		case 38: // up
+			this.resumeSchedulerAndActions();
+			//this.scheduleUpdate();
 			break;
 		case 39: // right
-			energy = energy + 5;
-			determineThresholdAndSpeed();
+			if(energy <= 250) energy = energy + 5; determineThresholdAndSpeed();
 			break;
 		case 40: // down
+			this.pauseSchedulerAndActions();
+			//this.unscheduleUpdate();
 			break;
 		}
 	}
