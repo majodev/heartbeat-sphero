@@ -10,6 +10,10 @@ initSphero = function () {
 
 	sphero.on('connected', function() {
 	 	console.log("Sphero connected!");
+
+	 	// cocos2d visualization notify that its connected...
+	 	setSpheroConnectedTextEnabled();
+
 		sphero.setStabilization(true);
 		sphero.setDataStreaming([
 			sphero.sensors.accelerometer_x,

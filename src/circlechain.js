@@ -84,6 +84,8 @@ var determineThresholdAndSpeed = function () {
 	circleSpeed = (circleSpeed + (0.1 + 7*(energy/256)))/2;
 }
 
+var debugLabel;
+
 var circleChainGame = cc.Layer.extend({
 	init:function(){
 		this._super();
@@ -147,8 +149,18 @@ var circleChainGame = cc.Layer.extend({
 			})
 		}
 
+		debugLabel = cc.LabelTTF.create("trying to connect with sphero...", "Helvetica", 16, cc.size(256, 32), cc.TEXT_ALIGNMENT_RIGHT);
+		debugLabel.setColor(new cc.Color3B(255,0,0));
+		debugLabel.setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM);
+		debugLabel.setHorizontalAlignment(cc.TEXT_ALIGNMENT_RIGHT)
+		debugLabel.setPositionX(500);
+		debugLabel.setPositionY(30);
+		gameLayer.addChild(debugLabel);
+
 		// add gameLayer to layer
 		this.addChild(gameLayer);
+
+
 		return true;
 	},
 	update:function() {
@@ -183,5 +195,10 @@ var circleChainGame = cc.Layer.extend({
 		}
 	}
 });
+
+var setSpheroConnectedTextEnabled = function () {
+	debugLabel.setString("sphero connected!");
+	debugLabel.setColor(new cc.Color3B(0,255,0));
+}
 
 //circleChainGame.onEnter

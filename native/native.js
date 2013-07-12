@@ -17,7 +17,7 @@ win.on('close', function() {
 });
 
 // show dev-tools for debugging
-//win.showDevTools();
+win.showDevTools();
 
 // refocus on windows after dev-tools are shown
 win.focus();
