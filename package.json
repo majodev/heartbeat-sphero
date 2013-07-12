@@ -12,7 +12,9 @@
     "width": 640,
     "height": 400,
     "min_width": 640,
-    "min_height": 400
+    "min_height": 400,
+    "kiosk": false
+    //"fullscreen": false
   	},
   	"private": true,
   	"dependencies": {

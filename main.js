@@ -27,7 +27,7 @@ var cocos2dApp = cc.Application.extend({
 			director.setAnimationInterval(1.0 / this.config['frameRate']);
 
 			//load resources
-			cc.LoaderScene.preload([], function () {
+			cc.LoaderScene.preload(g_ressources, function () {
 					director.replaceScene(new this.startScene());
 			}, this);
 

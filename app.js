@@ -11,4 +11,4 @@ win.on('focus', function() {
   console.log('New window is focused');
 });
 
-win.showDevTools();
+//win.showDevTools();
