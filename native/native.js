@@ -7,14 +7,12 @@ var win = gui.Window.get();
 // define handle close event for window properly
 win.on('close', function() {
   this.hide(); // Pretend to be closed already
-
-  if(typeof sphero === "undefined") {
-		console.log("closing application, cannot communicate with sphero!");
-	} else {
-		console.log("closing application, shutting down sphero...");
-		sphero.close();
-	}
-
+	try{
+		console.log("closing application, trying to shut down sphero...");
+  	sphero.close();
+	}catch(e){
+  	console.log("error while trying to shut down sphero: " + e);
+  }
   this.close(true);
 });
 
