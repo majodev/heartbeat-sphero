@@ -6,20 +6,34 @@ var sphero;
 
 
 initSphero = function () {
-	 sphero = new spheroModule.Sphero();
+	sphero = new spheroModule.Sphero();
+	connected = false;
+
+
+	connectedHandler = function () {
+		if(connected === false) {
+			console.log("Sphero connected!");
+
+		 	// cocos2d visualization notify that its connected...
+		 	setSpheroConnectedTextEnabled();
+
+			sphero.setStabilization(true);
+			sphero.setDataStreaming([
+				sphero.sensors.accelerometer_x,
+				sphero.sensors.accelerometer_y,
+				sphero.sensors.accelerometer_z
+			]);
+
+			connected = true;
+		}
+	};
 
 	sphero.on('connected', function() {
-	 	console.log("Sphero connected!");
+	 	connectedHandler();
+	});
 
-	 	// cocos2d visualization notify that its connected...
-	 	setSpheroConnectedTextEnabled();
-
-		sphero.setStabilization(true);
-		sphero.setDataStreaming([
-			sphero.sensors.accelerometer_x,
-			sphero.sensors.accelerometer_y,
-			sphero.sensors.accelerometer_z
-		]);
+	sphero.on('open', function() {
+		connectedHandler();
 	});
 
 	sphero.on('notification', function(message) {

@@ -93,7 +93,7 @@ var circleChainGame = cc.Layer.extend({
 
 		var maxX = s.width;
 		var mayY = s.height;
-		var countCircles = 1000;
+		var countCircles = 300;
 
 		// tell that update function should be called per frame
 		this.scheduleUpdate();
