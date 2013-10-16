@@ -1,7 +1,7 @@
 {
-	"name": "node-webkit-sphero-prototype",
+	"name": "heartbeat-sphero",
 	"version": "0.0.1",
-	"description": "Test integration with node sphero plugin via serial-socket",
+	"description": "Prototype integration node-webkit and node-sphero",
 	"main": "app.html",
 	"window": {
 		"title": "node webkit test with sphero",
