@@ -1,7 +1,7 @@
 {
 	"name": "heartbeat-sphero",
 	"version": "0.0.1",
-	"description": "Prototype integration node-webkit and node-sphero",
+	"description": "Prototype integration node-webkit, cocos2d and node-sphero",
 	"main": "app.html",
 	"window": {
 		"title": "node webkit test with sphero",
